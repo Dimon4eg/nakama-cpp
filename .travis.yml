@@ -1,0 +1,36 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          update: true
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - cmake
+          - build-essential
+          - autoconf
+          - libtool
+          - pkg-config
+          - libgflags-dev
+          - libgtest-dev
+          - libc++-dev
+          - golang
+          - perl
+      compiler:
+        - clang
+        - gcc
+      script:
+      - cd $TRAVIS_BUILD_DIR/build/linux
+      - python build_linux_all.py
+
+before_script:
+  - wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz -O /tmp/boost.tar.gz
+  - tar -xvf /tmp/boost.tar.gz
+  - export BOOST_ROOT=$PWD/boost_1_69_0
+  - cd $BOOST_ROOT
+  - ./bootstrap.sh --with-libraries=system,chrono,thread
+  - ./b2
