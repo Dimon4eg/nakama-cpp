@@ -12,6 +12,8 @@ Nakama C/C++ Client SDK
 
 > General C/C++ client for Nakama server.
 
+![AppVeyor branch](https://img.shields.io/appveyor/ci/Dimon4eg/nakama-cpp/appveyor-ci)
+
 [Nakama](https://github.com/heroiclabs/nakama) is an open-source server designed to power modern games and apps. Features include user accounts, chat, social, matchmaker, realtime multiplayer, and much [more](https://heroiclabs.com).
 
 This client implements the full API and socket options with the server. It's written in C and C++11 with minimal dependencies to support Cocos2d-x, Unreal and other custom engines and frameworks.
