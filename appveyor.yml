@@ -1,3 +1,5 @@
+version: 1.0.{build}
+
 image:
 - Ubuntu
 
@@ -5,19 +7,28 @@ configuration:
   - Release
 
 platform:
-  - x86
   - x64
 
 install:
-  - wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz -O /tmp/boost.tar.gz
-  - tar -xf /tmp/boost.tar.gz -C /tmp
-  - export BOOST_ROOT=/tmp/boost_1_69_0
+  - wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz -O /home/appveyor/projects/boost.tar.gz
+  - tar -xf /home/appveyor/projects/boost.tar.gz -C /home/appveyor/projects
+  - export BOOST_ROOT=/home/appveyor/projects/boost_1_69_0
   - cd $BOOST_ROOT
   - ./bootstrap.sh --with-libraries=system,chrono,thread
   - ./b2
+  - cd $APPVEYOR_BUILD_FOLDER
+  - git submodule update --init --recursive
+
+# build cache to preserve files/folders between builds
+cache:
+  - '%BOOST_ROOT%'
 
 build_script:
-  - cd %APPVEYOR_BUILD_FOLDER%/build/linux
+  - cd $APPVEYOR_BUILD_FOLDER/build/linux
   - python build_linux_all.py
 
-cache: '%APPVEYOR_BUILD_FOLDER%/release/nakama-cpp-sdk'
+#test_script:
+#  - $APPVEYOR_BUILD_FOLDER/build/linux/Release_x64/test/nakama-test
+
+artifacts:
+  - path: '%APPVEYOR_BUILD_FOLDER%/release/nakama-cpp-sdk'
