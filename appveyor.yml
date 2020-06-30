@@ -31,4 +31,4 @@ build_script:
 #  - $APPVEYOR_BUILD_FOLDER/build/linux/Release_x64/test/nakama-test
 
 artifacts:
-  - path: '%APPVEYOR_BUILD_FOLDER%/release/nakama-cpp-sdk'
+  - path: 'release/nakama-cpp-sdk'
